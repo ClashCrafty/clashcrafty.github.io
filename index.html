@@ -1,27 +1,38 @@
 <html>
-    <head>
-      <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css" />
-      <script defer src="https://pyscript.net/latest/pyscript.js"></script>
-    </head>
 
-  <body>
-    <h1>Let's plot random numbers</h1>
+<head>
+    <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css" />
+    <script defer src="https://pyscript.net/latest/pyscript.js"></script>
+</head>
+
+<body>
+    <h1>Let's generate some island</h1>
     <div id="plot"></div>
-    
+
     <py-config type="toml">
-        packages = ["numpy", "matplotlib"]
+        packages = ["numpy", "matplotlib", "Pillow", "faker"]
 
         [[fetch]]
-        files = ["./data.py"]
+        files = ["./main.py", "./perlinNoise.py", "./coloration_deco.py", "./detourage_principal.py", "./detourage_spe.py"]
     </py-config>
 
     <py-script>
-      import matplotlib.pyplot as plt
-      from data import make_x_and_y
-      x, y = make_x_and_y(n=1000)
-      fig, ax = plt.subplots()
-      ax.scatter(x, y)
-      display(fig, target="plot")
+
+        import matplotlib.pyplot as plt
+        from main import generation_ile
+        # from hello import matrix
+
+        noise, noise_det = generation_ile(256)
+
+        fig, ax = plt.subplots(1,2)
+        ax[0].imshow(noise, cmap='gray')
+        ax[1].imshow(noise_det)
+
+        # ax = plt.imshow(noise, cmap = "gray")
+
+        display(fig.figure)
+
     </py-script>
-  </body>
+</body>
+
 </html>
